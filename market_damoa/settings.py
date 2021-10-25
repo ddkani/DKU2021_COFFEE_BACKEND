@@ -37,6 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+    'corsheaders',
+    'django_extensions'
+
+
+    # 개별 애플리케이션 추가
+    'market.apps.MarketConfig',
+    'mall_auction.apps.MallAuctionConfig',
+    'mall_naver_shopping.apps.MallNaverShoppingConfig'
 ]
 
 MIDDLEWARE = [
