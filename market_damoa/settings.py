@@ -17,11 +17,11 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-load_dotenv()
-
-# TODO: 프로파일에 따른 dotenv 로드 변경
+# TODO: 프로파일에 따른 dotenv 로드 변경 + 파일 없는 환경에서 정상동작 처리
 # TODO: 인스턴스 실행 환경 분리
 
+
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
