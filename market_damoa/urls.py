@@ -15,7 +15,27 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework.permissions import AllowAny
+
+
+openapi_info = openapi.Info(
+    title='커피두잔 API',
+    default_version='v1',
+    description='커피두잔 API Docs',
+    contact=openapi.Contact(email='32187345@dankook.ac.kr'),
+    license=openapi.License(name='License'),
+)
+
+schema_view = get_schema_view(
+    openapi_info,
+    public=True,
+    permission_classes=(AllowAny,),
+)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('docs/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
