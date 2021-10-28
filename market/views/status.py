@@ -21,7 +21,8 @@ class StatusViewSet(viewsets.GenericViewSet):
                     ),
                 }
             )
-        }
+        },
+        security=[]
     )
     @action(methods=['GET'], detail=False, url_path="index")
     def index(self, request: Request, *args, **kwargs):
