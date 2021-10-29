@@ -25,6 +25,8 @@ class Category(models.Model):
 class Product(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=256)
+    # TODO: 전체 이미지 리스트에서 하나를 가져올 수 도 있을듯
+    display_image = models.CharField(null=True, max_length=256)
 
     class Meta:
         verbose_name = "Product"

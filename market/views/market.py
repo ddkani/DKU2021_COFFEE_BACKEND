@@ -5,10 +5,10 @@ from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from market.models import Category
+from market.models import Category, Product
 from market.schemas.market import SEARCH_PRODUCT_REQUEST_PARAMETERS, \
-    SEARCH_PRODUCT_RESPONSE_SCHEMA
-from market.serializers.market import CategoryModelSerializer
+    SEARCH_PRODUCT_RESPONSE_SCHEMA, PRODUCT_REQUEST_PARAMETERS
+from market.serializers.market import CategoryModelSerializer, ProductModelSerializer, ProductModelDetailSerializer
 
 
 class MarketViewSet(viewsets.GenericViewSet):
@@ -34,4 +34,25 @@ class MarketViewSet(viewsets.GenericViewSet):
     )
     @action(methods=['get'], detail=False, url_path='search')
     def search_product(self, request: Request, *args, **kwargs):
-        pass
+        queryset = Product.objects.filter(name__search=request.query_params.get('keyword'))
+        serializer = ProductModelSerializer(queryset, many=True)
+        return Response(data=serializer.data)
+
+    @swagger_auto_schema(
+        operation_description="상품의 세부 정보를 불러옵니다.",
+        manual_parameters=PRODUCT_REQUEST_PARAMETERS,
+        responses={
+            status.HTTP_200_OK: SEARCH_PRODUCT_RESPONSE_SCHEMA,
+            status.HTTP_404_NOT_FOUND: {}
+        },
+        security=[]
+    )
+    @action(methods=['get'], detail=False, url_path=r'product/<int:product_id>/')
+    def product(self, request: Request, product_id: int, *args, **kwargs):
+        try:
+            queryset = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = ProductModelDetailSerializer(queryset)
+        return Response(data=serializer.data)

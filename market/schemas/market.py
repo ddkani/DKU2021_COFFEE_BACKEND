@@ -43,3 +43,11 @@ SEARCH_PRODUCT_RESPONSE_SCHEMA: Schema = build_list_object_schema(
         }
     )
 )
+
+
+PRODUCT_REQUEST_PARAMETERS: List[Parameter] = [
+    openapi.Parameter(
+        name="product_id", type=openapi.TYPE_NUMBER, in_=openapi.IN_PATH, required=True,
+        description="상품의 고유 id입니다."
+    )
+]
