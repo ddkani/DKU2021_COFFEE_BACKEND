@@ -43,7 +43,7 @@ class ProductMallExtension(models.Model):
         'naver_shopping_products'
     ]
     EXTENDED_EXPORT_FIELD_NAMES = [
-        'id', 'representative_id', 'url'
+        'id', 'name', 'representative_id', 'url'
     ]
 
     id = models.BigAutoField(primary_key=True)
@@ -56,14 +56,14 @@ class ProductMallExtension(models.Model):
             mall_results = []
 
             # TODO: 해당 오브젝트 클랫 정보 - 부모 클래스 사용?
-            for product_object in getattr(self, field_name):
+            for product_object in getattr(self, field_name).all():
                 object_result = {}
 
                 for _export_field_name in self.EXTENDED_EXPORT_FIELD_NAMES:
                     object_result.setdefault(
                         _export_field_name, getattr(product_object, _export_field_name)
                     )
-                    mall_results.append(object_result)
+                mall_results.append(object_result)
 
             results.setdefault(field_name, mall_results)
         return results

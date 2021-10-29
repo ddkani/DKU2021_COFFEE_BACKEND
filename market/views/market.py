@@ -32,12 +32,13 @@ class MarketViewSet(viewsets.GenericViewSet):
         responses={status.HTTP_200_OK: SEARCH_PRODUCT_RESPONSE_SCHEMA},
         security=[]
     )
-    @action(methods=['get'], detail=False, url_path='search')
+    @action(methods=['get'], detail=False, url_path='search_product')
     def search_product(self, request: Request, *args, **kwargs):
-        queryset = Product.objects.filter(name__search=request.query_params.get('keyword'))
+        queryset = Product.objects.filter(name__contains=request.query_params.get('keyword'))
         serializer = ProductModelSerializer(queryset, many=True)
         return Response(data=serializer.data)
 
+    # https://stackoverflow.com/questions/68246391/url-path-is-matching-the-wrong-view-in-drf-viewsets
     @swagger_auto_schema(
         operation_description="상품의 세부 정보를 불러옵니다.",
         manual_parameters=PRODUCT_REQUEST_PARAMETERS,
@@ -47,7 +48,7 @@ class MarketViewSet(viewsets.GenericViewSet):
         },
         security=[]
     )
-    @action(methods=['get'], detail=False, url_path=r'product/<int:product_id>/')
+    @action(methods=['get'], detail=False, url_path=r'product/(?P<product_id>\w+)')
     def product(self, request: Request, product_id: int, *args, **kwargs):
         try:
             queryset = Product.objects.get(id=product_id)

@@ -1,4 +1,4 @@
-from rest_framework.fields import CharField
+from rest_framework.fields import CharField, IntegerField
 from rest_framework.serializers import ModelSerializer
 
 from market.models import Category, Product
@@ -25,8 +25,9 @@ class CategoryModelSerializer(ModelSerializer):
 
 # 기본 제품 정보
 class ProductModelSerializer(ModelSerializer):
-    code = CharField()
+    id = IntegerField()
     name = CharField()
+    display_image = CharField()
 
     class Meta:
         model = Product
