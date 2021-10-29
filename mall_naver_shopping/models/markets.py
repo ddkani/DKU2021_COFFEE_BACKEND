@@ -8,6 +8,7 @@ class Product(models.Model):
 
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=256)
+    display_image = models.CharField(null=True, max_length=256)
 
     product_id = models.PositiveIntegerField()
     original_product_extension = models.ForeignKey(
