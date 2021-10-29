@@ -1,6 +1,5 @@
-from market.models.markets import Category
-
+from market.models.markets import Category, Product, ProductMallExtension
 
 __all__ = [
-    Category
+    Category, Product, ProductMallExtension
 ]
