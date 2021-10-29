@@ -4,8 +4,8 @@ COMMON_RESPONSE_SCHEMA = openapi.Schema(
     type=openapi.TYPE_OBJECT,
     properties={
         'result': openapi.Schema(type=openapi.TYPE_BOOLEAN),
-        'error_message': openapi.Schema(type=[openapi.TYPE_STRING, 'null']),
-        'token': openapi.Schema(type=[openapi.TYPE_STRING, 'null']),
+        'error_message': openapi.Schema(type=openapi.TYPE_STRING, nullable=True),
+        'token': openapi.Schema(type=openapi.TYPE_STRING, nullable=True),
     }
 )
 

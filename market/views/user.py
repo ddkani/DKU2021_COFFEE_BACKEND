@@ -2,7 +2,6 @@ from copy import copy
 
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets, status
 from rest_framework.authtoken.models import Token
