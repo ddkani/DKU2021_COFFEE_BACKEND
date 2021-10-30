@@ -6,22 +6,32 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from market.models.products import Product
-from market.schemas.product import SEARCH_PRODUCT_REQUEST_PARAMETERS, SEARCH_PRODUCT_RESPONSE_SCHEMA, \
-    PRODUCT_REQUEST_PARAMETERS, PRODUCT_RESPONSE_SCHEMA
+from market.schemas.product import SEARCH_PRODUCT_REQUEST_PARAMETERS, PRODUCT_LIST_RESPONSE_SCHEMA, \
+    PRODUCT_REQUEST_PARAMETERS, PRODUCT_DETAIL_RESPONSE_SCHEMA, LIST_PRODUCT_REQUEST_PARAMETERS
 from market.serializers.product import ProductModelSerializer, ProductModelDetailSerializer
 
 
-class ProductViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin):
+class ProductViewSet(
+    viewsets.GenericViewSet,
+    mixins.RetrieveModelMixin,
+    mixins.ListModelMixin,
+):
     permission_classes = (AllowAny, )
     queryset = Product.objects.all()
-    serializer_class = ProductModelDetailSerializer
+    # serializer_class = ProductModelDetailSerializer
+
+    def get_serializer_class(self):
+        return {
+            'list': ProductModelSerializer,
+            'retrieve': ProductModelDetailSerializer
+        }[self.action]
 
     # https://stackoverflow.com/questions/68246391/url-path-is-matching-the-wrong-view-in-drf-viewsets
     @swagger_auto_schema(
         operation_description="상품의 세부 정보를 불러옵니다.",
         manual_parameters=PRODUCT_REQUEST_PARAMETERS,
         responses={
-            status.HTTP_200_OK: PRODUCT_RESPONSE_SCHEMA,
+            status.HTTP_200_OK: PRODUCT_DETAIL_RESPONSE_SCHEMA,
             status.HTTP_404_NOT_FOUND: {}
         },
         security=[]
@@ -30,9 +40,21 @@ class ProductViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin):
         return super().retrieve(request, *args, **kwargs)
 
     @swagger_auto_schema(
+        operation_description="상품의 리스트를 불러옵니다.",
+        manual_parameters=LIST_PRODUCT_REQUEST_PARAMETERS,
+        responses={
+            # status.HTTP_200_OK: PRODUCT_LIST_RESPONSE_SCHEMA,
+            # status.HTTP_404_NOT_FOUND: {}
+        },
+        security=[]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @swagger_auto_schema(
         operation_description="입력한 키워드로 상품 리스트를 검색합니다.",
         manual_parameters=SEARCH_PRODUCT_REQUEST_PARAMETERS,
-        responses={status.HTTP_200_OK: SEARCH_PRODUCT_RESPONSE_SCHEMA},
+        responses={status.HTTP_200_OK: PRODUCT_LIST_RESPONSE_SCHEMA},
         security=[]
     )
     @action(methods=['get'], detail=False, url_path='search')

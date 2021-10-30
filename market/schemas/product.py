@@ -17,6 +17,12 @@ SEARCH_PRODUCT_REQUEST_PARAMETERS: List[Parameter] = [
 ]
 
 
+LIST_PRODUCT_REQUEST_PARAMETERS: List[Parameter] = [
+    openapi.Parameter(
+        name='page', type=openapi.TYPE_NUMBER, in_=openapi.IN_QUERY,  required=False
+    )
+]
+
 _product_properties = {
     'id': openapi.Schema(type=openapi.TYPE_NUMBER),
     'name': openapi.Schema(type=openapi.TYPE_STRING),
@@ -24,7 +30,7 @@ _product_properties = {
 }
 
 
-SEARCH_PRODUCT_RESPONSE_SCHEMA: Schema = build_list_object_schema(
+PRODUCT_LIST_RESPONSE_SCHEMA: Schema = build_list_object_schema(
     openapi.Schema(
         type=openapi.TYPE_OBJECT,
         properties=_product_properties
@@ -57,13 +63,14 @@ for field_name in ProductMallExtension.EXTENDED_RELATED_FIELD_NAMES:
     )
 
 
-PRODUCT_RESPONSE_SCHEMA: Schema = openapi.Schema(
+PRODUCT_DETAIL_RESPONSE_SCHEMA: Schema = openapi.Schema(
     type=openapi.TYPE_OBJECT,
     properties={
         **_product_properties,
         'mall_products': openapi.Schema(
             type=openapi.TYPE_OBJECT,
-            properties=_mall_product_properties
+            properties=_mall_product_properties,
+            description='각 쇼핑몰별로 제품정보에 연결된 상품데이터입니다. (쇼핑몰 추가 가능)'
         )
     }
 )

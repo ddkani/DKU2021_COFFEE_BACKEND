@@ -27,7 +27,7 @@ class Product(models.Model):
 class ProductMallExtension(models.Model):
     # !! 필드 입력시에는 뒤의 _products 접미사가 해제됩니다.
     EXTENDED_RELATED_FIELD_NAMES = [
-        'naver_shopping_products'
+        'naver_shopping_products', 'auction_products'
     ]
     EXTENDED_EXPORT_FIELD_NAMES = [
         'id', 'name', 'display_image', 'representative_id', 'url'
