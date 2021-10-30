@@ -1,6 +1,7 @@
 from typing import Optional
 from django.db import models
-from market.models import Product
+
+from market.models.products import Product as MallProduct
 
 
 class Product(models.Model):
@@ -18,7 +19,7 @@ class Product(models.Model):
 
     @property
     # Optional - 파싱 상태에 따라 정보가 존재하지 않을 수 있음.
-    def original_product(self) -> Optional[Product]:
+    def original_product(self) -> Optional[MallProduct]:
         return None if self.original_product_extension is None else \
             self.original_product_extension.product
 

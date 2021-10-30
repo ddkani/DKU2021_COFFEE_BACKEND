@@ -5,10 +5,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from market.models import Category, Product
-from market.schemas.market import SEARCH_PRODUCT_REQUEST_PARAMETERS, \
-    SEARCH_PRODUCT_RESPONSE_SCHEMA, PRODUCT_REQUEST_PARAMETERS
-from market.serializers.market import CategoryModelSerializer, ProductModelSerializer, ProductModelDetailSerializer
+from market.models import Category
+from market.serializers.market import CategoryModelSerializer
 
 
 class MarketViewSet(viewsets.GenericViewSet):
@@ -24,36 +22,4 @@ class MarketViewSet(viewsets.GenericViewSet):
     def get_category(self, request: Request, *args, **kwargs):
         queryset = Category.objects.filter(parent_id__isnull=True)
         serializer = CategoryModelSerializer(queryset, many=True)
-        return Response(data=serializer.data)
-
-    @swagger_auto_schema(
-        operation_description="입력한 키워드로 상품 리스트를 검색합니다.",
-        manual_parameters=SEARCH_PRODUCT_REQUEST_PARAMETERS,
-        responses={status.HTTP_200_OK: SEARCH_PRODUCT_RESPONSE_SCHEMA},
-        security=[]
-    )
-    @action(methods=['get'], detail=False, url_path='search_product')
-    def search_product(self, request: Request, *args, **kwargs):
-        queryset = Product.objects.filter(name__contains=request.query_params.get('keyword'))
-        serializer = ProductModelSerializer(queryset, many=True)
-        return Response(data=serializer.data)
-
-    # https://stackoverflow.com/questions/68246391/url-path-is-matching-the-wrong-view-in-drf-viewsets
-    @swagger_auto_schema(
-        operation_description="상품의 세부 정보를 불러옵니다.",
-        manual_parameters=PRODUCT_REQUEST_PARAMETERS,
-        responses={
-            status.HTTP_200_OK: SEARCH_PRODUCT_RESPONSE_SCHEMA,
-            status.HTTP_404_NOT_FOUND: {}
-        },
-        security=[]
-    )
-    @action(methods=['get'], detail=False, url_path=r'product/(?P<product_id>\w+)')
-    def product(self, request: Request, product_id: int, *args, **kwargs):
-        try:
-            queryset = Product.objects.get(id=product_id)
-        except Product.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        serializer = ProductModelDetailSerializer(queryset)
         return Response(data=serializer.data)
