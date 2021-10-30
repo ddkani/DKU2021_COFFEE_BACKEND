@@ -44,7 +44,7 @@ class UserViewSet(viewsets.GenericViewSet):
             resp['error_message'] = '비밀번호가 다릅니다.'
             return Response(resp)
 
-        token, created = Token.objects.get_or_create(user=user)
+        token = Token.objects.create(user=user)
         resp['result'] = True
         resp['token'] = token.key
         return Response(resp)
@@ -78,7 +78,7 @@ class UserViewSet(viewsets.GenericViewSet):
 
         try:
             user = User.objects.create_user(
-                email=email, username=username, password=password
+                username, email=email, password=password
             )
         except IntegrityError:
             resp['error_message'] = "중복된 이메일이 또는 닉네임이 있습니다."
