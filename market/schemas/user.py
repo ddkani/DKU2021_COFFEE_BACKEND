@@ -24,6 +24,6 @@ USER_JOIN_REQUEST_SCHEMA = openapi.Schema(
     properties={
         'email': openapi.Schema(type=openapi.TYPE_STRING),
         'password': openapi.Schema(type=openapi.TYPE_STRING),
-        'nickname': openapi.Schema(type=openapi.TYPE_STRING),
+        'username': openapi.Schema(type=openapi.TYPE_STRING),
     }
 )
