@@ -44,7 +44,7 @@ class UserViewSet(viewsets.GenericViewSet):
             resp['error_message'] = '비밀번호가 다릅니다.'
             return Response(resp)
 
-        token = Token.objects.create(user=user)
+        token, created = Token.objects.get_or_create(user=user)
         resp['result'] = True
         resp['token'] = token.key
         return Response(resp)
