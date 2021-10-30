@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-3=+k(7m29)lnms!%c6mwv!m3562%!a2=q6#s_fiz4+gv0@z%n(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['coffee.live2skull.kr', 'localhost', '*']
 
 
 # Application definition
@@ -154,7 +154,8 @@ SWAGGER_SETTINGS = {
             'name': 'Authorization',
             'in': 'header'
         }
-    }
+    },
+    'DEFAULT_API_URL': 'https://coffee.live2skull.kr/api/'
 }
 
 

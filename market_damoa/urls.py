@@ -31,7 +31,7 @@ openapi_info = openapi.Info(
 schema_view = get_schema_view(
     openapi_info,
     public=True,
-    permission_classes=(AllowAny,),
+    permission_classes=(AllowAny,)
 )
 
 
