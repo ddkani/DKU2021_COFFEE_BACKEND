@@ -104,7 +104,8 @@ DATABASES = {
         'HOST': os.environ.get('RDS_HOST'),
         'PORT': os.environ.get('RDS_PORT'),
         'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_ALL_TABLES'",
+            # MySQL Aurora에서 오류 발생
+            # 'init_command': "SET sql_mode='STRICT_ALL_TABLES'",
             'charset': 'utf8mb4',
             'use_unicode': True,
         },

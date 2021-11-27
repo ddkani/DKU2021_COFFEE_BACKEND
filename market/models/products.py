@@ -54,3 +54,5 @@ class ProductMallExtension(models.Model):
 
             results.setdefault(field_name.replace('_products', ''), mall_results)
         return results
+
+

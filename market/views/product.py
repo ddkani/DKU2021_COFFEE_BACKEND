@@ -26,6 +26,7 @@ class ProductViewSet(
             'retrieve': ProductModelDetailSerializer
         }[self.action]
 
+    # notify 등으로 받은 상품 정보
     # https://stackoverflow.com/questions/68246391/url-path-is-matching-the-wrong-view-in-drf-viewsets
     @swagger_auto_schema(
         operation_description="상품의 세부 정보를 불러옵니다.",
@@ -62,6 +63,7 @@ class ProductViewSet(
         queryset = Product.objects.filter(name__contains=request.query_params.get('keyword'))
         serializer = ProductModelSerializer(queryset, many=True)
         return Response(data=serializer.data)
+
 
     # https://stackoverflow.com/questions/68246391/url-path-is-matching-the-wrong-view-in-drf-viewsets
     # @swagger_auto_schema(
