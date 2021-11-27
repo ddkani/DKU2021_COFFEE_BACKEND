@@ -36,7 +36,7 @@ class UserProductNotify(models.Model):
     id = models.BigAutoField(primary_key=True)
 
     product = models.ForeignKey(Product, null=False, on_delete=models.DO_NOTHING)
-    user = models.ForeignKey(Product, null=False, on_delete=models.DO_NOTHING, related_name='product_notifications')
+    user = models.ForeignKey(User, null=False, on_delete=models.DO_NOTHING, related_name='product_notifications')
     created_at = models.DateTimeField(null=True, auto_now_add=True)
 
     class Meta:

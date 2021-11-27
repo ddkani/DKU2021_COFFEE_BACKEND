@@ -1,5 +1,4 @@
-from django.forms import IntegerField
-from rest_framework.fields import CharField
+from rest_framework.fields import CharField, IntegerField
 from rest_framework.serializers import Serializer, ModelSerializer
 
 from market.models import UserNotify

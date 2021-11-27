@@ -30,7 +30,7 @@ class NotifyViewSet(viewsets.GenericViewSet):
         req_serializer = SetNotifyProductRequestSerializer(data=request.data)
 
         req_serializer.is_valid(raise_exception=True)
-        req_data = req_serializer.data
+        req_data = req_serializer.validated_data
 
         try:
             UserProductNotify(
