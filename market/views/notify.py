@@ -23,7 +23,7 @@ class NotifyViewSet(viewsets.GenericViewSet):
             status.HTTP_200_OK: GENERIC_RESULT_RESPONSE_BODY
         }
     )
-    @action(methods=['post'], detail=False, url_path='set_notify')
+    @action(methods=['post'], detail=False, url_path='set_product_notify')
     def set_notify_product(self, request: Request, *args, **kwargs):
         pass
 
@@ -34,6 +34,7 @@ class NotifyViewSet(viewsets.GenericViewSet):
             status.HTTP_200_OK: GENERIC_RESULT_RESPONSE_BODY
         }
     )
+    @action(methods=['post'], detail=False, url_path='remove_product_notify')
     def remove_notify_product(self, request: Request, *args, **kwargs):
         pass
 
