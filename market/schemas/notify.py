@@ -32,9 +32,9 @@ GET_NOTIFY_PRODUCT_RESPONSE_BODY = build_list_object_schema(
     openapi.Schema(
         type=openapi.TYPE_OBJECT,
         properties={
-            'notification_id': openapi.Schema(type=openapi.TYPE_NUMBER, description='알림 고유아이디, 알림 읽음처리 시 사용'),
+            'id': openapi.Schema(type=openapi.TYPE_NUMBER, description='알림 고유아이디, 알림 읽음처리 시 사용'),
             'product_id': openapi.Schema(type=openapi.TYPE_NUMBER, description='알림이 발생한 상품의 고유아이디'),
-            'mall_info': openapi.Schema(
+            'mall_name': openapi.Schema(
                 type=openapi.TYPE_STRING,
                 description='해당 고유 상품에서의 알림이 발생한 쇼핑몰 이름 (naver_shopping_products, auction_products) 등 위 API 참조 소스'
             )

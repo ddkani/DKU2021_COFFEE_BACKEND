@@ -14,7 +14,7 @@ from market.serializers.market import CategoryModelSerializer
 class NotifyViewSet(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated, )
 
-    ## ==== 사용자가 알림을 지정하는 기준
+    # ==== 사용자가 알림을 지정하는 기준
 
     @swagger_auto_schema(
         operation_description="사용자가 선택한 제품으로 알림을 지정합니다.",
@@ -38,7 +38,7 @@ class NotifyViewSet(viewsets.GenericViewSet):
     def remove_notify_product(self, request: Request, *args, **kwargs):
         pass
 
-    ## ==== 사용자에게 제공되는 알림 기준
+    # ==== 사용자에게 제공되는 알림 기준
 
     @swagger_auto_schema(
         operation_description="사용자에게 지정되어있는 알림이 있는지 확인합니다. 더이상 받지 않을 경우, 읽음 처리 API를 호출해야 합니다.",
