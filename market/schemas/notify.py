@@ -23,7 +23,11 @@ READ_NOTIFY_PRODUCT_REQUEST_BODY = openapi.Schema(
 GENERIC_RESULT_RESPONSE_BODY = openapi.Schema(
     type=openapi.TYPE_OBJECT,
     properties={
-        'result': openapi.Schema(type=openapi.TYPE_BOOLEAN)
+        'result': openapi.Schema(type=openapi.TYPE_BOOLEAN),
+        'error_message': openapi.Schema(
+            type=['null', openapi.TYPE_STRING],
+            description='요청 실패시 해당 오류 메시지를 반환합니다'
+        )
     }
 )
 
@@ -41,5 +45,4 @@ GET_NOTIFY_PRODUCT_RESPONSE_BODY = build_list_object_schema(
         }
     )
 )
-
 
