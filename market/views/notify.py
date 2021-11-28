@@ -85,10 +85,12 @@ class NotifyViewSet(viewsets.GenericViewSet):
     )
     @action(methods=['get'], detail=False, url_path='get_product_notify')
     def get_notify_product(self, request: Request, *args, **kwargs):
-        return UserProductNotifySerializer(
+        resp_serializer = UserProductNotifySerializer(
             data=UserProductNotify.objects.filter(user=request.user),
             many=True
         )
+        resp_serializer.is_valid()
+        return Response(resp_serializer.validated_data)
 
     # ==== 사용자에게 제공되는 알림 기준
 
@@ -100,12 +102,14 @@ class NotifyViewSet(viewsets.GenericViewSet):
     )
     @action(methods=['get'], detail=False, url_path="get_notify")
     def get_notify(self, request: Request, *args, **kwargsj):
-        return UserNotifyModelSerializer(
+        resp_serializer = UserNotifyModelSerializer(
             data=UserNotify.objects.filter(
                 user=request.user, is_read=False
             ),
             many=True
         )
+        resp_serializer.is_valid()
+        return Response(resp_serializer.validated_data)
 
     @swagger_auto_schema(
         operation_description="사용자에게 제공되는 알림을 읽음 처리합니다.",
