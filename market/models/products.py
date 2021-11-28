@@ -30,7 +30,7 @@ class ProductMallExtension(models.Model):
         'naver_shopping_products', 'auction_products'
     ]
     EXTENDED_EXPORT_FIELD_NAMES = [
-        'id', 'name', 'display_image', 'representative_id', 'url'
+        'id', 'name', 'display_image', 'representative_id', 'url', 'price'
     ]
 
     id = models.BigAutoField(primary_key=True)

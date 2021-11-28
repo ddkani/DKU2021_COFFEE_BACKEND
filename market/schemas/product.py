@@ -26,7 +26,8 @@ LIST_PRODUCT_REQUEST_PARAMETERS: List[Parameter] = [
 _product_properties = {
     'id': openapi.Schema(type=openapi.TYPE_NUMBER),
     'name': openapi.Schema(type=openapi.TYPE_STRING),
-    'display_image': openapi.Schema(type=openapi.TYPE_STRING)
+    'display_image': openapi.Schema(type=openapi.TYPE_STRING),
+    'price': openapi.Schema(type=openapi.TYPE_NUMBER)
 }
 
 
