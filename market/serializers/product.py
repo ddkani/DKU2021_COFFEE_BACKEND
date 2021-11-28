@@ -3,6 +3,7 @@ from rest_framework.serializers import ModelSerializer
 
 
 # 기본 제품 정보
+from market.models import UserProductNotify
 from market.models.products import Product
 
 
@@ -14,10 +15,19 @@ class ProductModelSerializer(ModelSerializer):
     def to_representation(self, instance: Product):
         result: dict = super().to_representation(instance)
 
-        # 개별 인스턴스
+        user = self.context['request'].user
+        result['user_notification_id'] = None
+
+        if user.id:
+            queryset = UserProductNotify.objects.filter(
+                user_id=user.id, product_id=instance.id
+            )
+            try:
+                result['user_notification_id'] = queryset.get().id
+            except UserProductNotify.DoesNotExist:
+                pass
 
         return result
-
 
     class Meta:
         model = Product

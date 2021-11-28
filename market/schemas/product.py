@@ -68,6 +68,9 @@ PRODUCT_DETAIL_RESPONSE_SCHEMA: Schema = openapi.Schema(
     type=openapi.TYPE_OBJECT,
     properties={
         **_product_properties,
+        'user_notification_id': openapi.Schema(
+            type=[openapi.TYPE_NUMBER, 'null'], description="사용자가 알림으로 지정한 제품인지 여부입니다."
+        ),
         'mall_products': openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties=_mall_product_properties,
