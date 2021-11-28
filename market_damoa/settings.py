@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     # 개별 애플리케이션 추가
     'market.apps.MarketConfig',
     'mall_auction.apps.MallAuctionConfig',
+    'mall_coupang.apps.MallCoupangConfig',
     'mall_naver_shopping.apps.MallNaverShoppingConfig'
 ]
 
