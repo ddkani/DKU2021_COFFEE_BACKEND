@@ -11,6 +11,14 @@ class ProductModelSerializer(ModelSerializer):
     name = CharField()
     display_image = CharField()
 
+    def to_representation(self, instance: Product):
+        result: dict = super().to_representation(instance)
+
+        # 개별 인스턴스
+
+        return result
+
+
     class Meta:
         model = Product
         fields = ('id', 'name', 'display_image')
