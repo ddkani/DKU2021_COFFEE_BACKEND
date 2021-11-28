@@ -8,9 +8,9 @@ from rest_framework.response import Response
 
 from market.models import UserProductNotify, UserNotify
 from market.schemas.notify import SET_NOTIFY_PRODUCT_REQUEST_BODY, GET_NOTIFY_PRODUCT_RESPONSE_BODY, \
-    GENERIC_RESULT_RESPONSE_BODY, READ_NOTIFY_PRODUCT_REQUEST_BODY
+    GENERIC_RESULT_RESPONSE_BODY, READ_NOTIFY_PRODUCT_REQUEST_BODY, GET_NOTIFY_RESPONSE_BODY
 from market.serializers.notify import SetNotifyProductRequestSerializer, RemoveNotifyProductRequestSerializer, \
-    UserNotifyModelSerializer
+    UserNotifyModelSerializer, UserProductNotifySerializer
 
 
 class NotifyViewSet(viewsets.GenericViewSet):
@@ -46,7 +46,6 @@ class NotifyViewSet(viewsets.GenericViewSet):
             'result': True, 'error_message': None
         })
 
-
     @swagger_auto_schema(
         operation_description="사용자가 지정한 제품의 알림을 해제합니다.",
         request_body=SET_NOTIFY_PRODUCT_REQUEST_BODY,
@@ -78,6 +77,19 @@ class NotifyViewSet(viewsets.GenericViewSet):
             'result': True, 'error_message': None
         })
 
+    @swagger_auto_schema(
+        operation_description='사용자가 지정한 제품 알림 리스트를 가져옵니다.',
+        responses={
+            status.HTTP_200_OK: GET_NOTIFY_RESPONSE_BODY
+        }
+    )
+    @action(methods=['get'], detail=False, url_path='get_product_notify')
+    def get_notify_product(self, request: Request, *args, **kwargs):
+        return UserProductNotifySerializer(
+            data=UserProductNotify.objects.filter(user=request.user),
+            many=True
+        )
+
     # ==== 사용자에게 제공되는 알림 기준
 
     @swagger_auto_schema(
@@ -87,7 +99,7 @@ class NotifyViewSet(viewsets.GenericViewSet):
         }
     )
     @action(methods=['get'], detail=False, url_path="get_notify")
-    def get_notify_product(self, request: Request, *args, **kwargsj):
+    def get_notify(self, request: Request, *args, **kwargsj):
         return UserNotifyModelSerializer(
             data=UserNotify.objects.filter(
                 user=request.user, is_read=False
@@ -103,7 +115,8 @@ class NotifyViewSet(viewsets.GenericViewSet):
         }
     )
     @action(methods=['post'], detail=False, url_path="read_notify")
-    def read_notify_product(self, request: Request, *args, **kwargs):
+    def read_notify(self, request: Request, *args, **kwargs):
         UserNotify.objects.filter(
             user=request.user,
         ).update(is_read=True)
+        return Response({'result': True, 'error_message': None})

@@ -20,6 +20,18 @@ READ_NOTIFY_PRODUCT_REQUEST_BODY = openapi.Schema(
     }
 )
 
+
+GET_NOTIFY_RESPONSE_BODY = build_list_object_schema(
+    openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'id': openapi.Schema(type=openapi.TYPE_NUMBER, description='알림설정 고유아이디'),
+            'product_id': openapi.Schema(type=openapi.TYPE_NUMBER, description='알림 지정 제품아이디'),
+            'created_at': openapi.Schema(type=openapi.FORMAT_DATE, description="생성 시각")
+        }
+    )
+)
+
 GENERIC_RESULT_RESPONSE_BODY = openapi.Schema(
     type=openapi.TYPE_OBJECT,
     properties={
@@ -31,7 +43,6 @@ GENERIC_RESULT_RESPONSE_BODY = openapi.Schema(
     }
 )
 
-# 특정 쇼핑몰을 말해주어야 하는데 ->
 GET_NOTIFY_PRODUCT_RESPONSE_BODY = build_list_object_schema(
     openapi.Schema(
         type=openapi.TYPE_OBJECT,
@@ -41,7 +52,8 @@ GET_NOTIFY_PRODUCT_RESPONSE_BODY = build_list_object_schema(
             'mall_name': openapi.Schema(
                 type=openapi.TYPE_STRING,
                 description='해당 고유 상품에서의 알림이 발생한 쇼핑몰 이름 (naver_shopping_products, auction_products) 등 위 API 참조 소스'
-            )
+            ),
+            'created_at': openapi.Schema(type=openapi.FORMAT_DATE, description="생성 시각")
         }
     )
 )
