@@ -106,7 +106,8 @@ DATABASES = {
         'PORT': os.environ.get('RDS_PORT'),
         'OPTIONS': {
             # MySQL Aurora에서 오류 발생
-            # 'init_command': "SET sqxl_mode='STRICT_TRANS_TABLES';",
+            'init_command': "use coffee_v2;",
+            # 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'; use coffee_v2;",
             # 'charset': 'utf8mb4',
             'charset': 'utf8',
             'use_unicode': True,
