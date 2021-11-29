@@ -1,5 +1,6 @@
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets, status, mixins
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
@@ -17,6 +18,7 @@ class ProductViewSet(
     mixins.ListModelMixin,
 ):
     permission_classes = (AllowAny, )
+    authentication_classes = (TokenAuthentication, )
     queryset = Product.objects.all()
     # serializer_class = ProductModelDetailSerializer
 
