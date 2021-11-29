@@ -13,6 +13,10 @@ from market.serializers.notify import SetNotifyProductRequestSerializer, RemoveN
     UserNotifyModelSerializer, UserProductNotifySerializer
 
 
+# !! REMIND - ModelSerializer -> data 인자 아님. 직접전달 후 serializer_instance.data 로 데이터 반환
+# 이때도 validation 없이 to_representation 호출됩니다.
+
+
 class NotifyViewSet(viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated, )
 
@@ -86,11 +90,10 @@ class NotifyViewSet(viewsets.GenericViewSet):
     @action(methods=['get'], detail=False, url_path='get_product_notify')
     def get_notify_product(self, request: Request, *args, **kwargs):
         resp_serializer = UserProductNotifySerializer(
-            data=UserProductNotify.objects.filter(user=request.user),
+            UserProductNotify.objects.filter(user_id=request.user.id),
             many=True
         )
-        resp_serializer.is_valid()
-        return Response(resp_serializer.validated_data)
+        return Response(resp_serializer.data)
 
     # ==== 사용자에게 제공되는 알림 기준
 
@@ -103,13 +106,12 @@ class NotifyViewSet(viewsets.GenericViewSet):
     @action(methods=['get'], detail=False, url_path="get_notify")
     def get_notify(self, request: Request, *args, **kwargsj):
         resp_serializer = UserNotifyModelSerializer(
-            data=UserNotify.objects.filter(
+            UserNotify.objects.filter(
                 user=request.user, is_read=False
             ),
             many=True
         )
-        resp_serializer.is_valid()
-        return Response(resp_serializer.validated_data)
+        return Response(resp_serializer.data)
 
     @swagger_auto_schema(
         operation_description="사용자에게 제공되는 알림을 읽음 처리합니다.",
