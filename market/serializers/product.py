@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework.fields import CharField, IntegerField
 from rest_framework.serializers import ModelSerializer
 
@@ -18,7 +19,7 @@ class ProductModelSerializer(ModelSerializer):
         user = self.context['request'].user
         result['user_notification_id'] = None
 
-        if user.id:
+        if isinstance(user, User):
             queryset = UserProductNotify.objects.filter(
                 user_id=user.id, product_id=instance.id
             )
