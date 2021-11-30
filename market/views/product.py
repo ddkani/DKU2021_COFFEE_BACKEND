@@ -63,7 +63,7 @@ class ProductViewSet(
     @action(methods=['get'], detail=False, url_path='search')
     def search_product(self, request: Request, *args, **kwargs):
         queryset = Product.objects.filter(name__contains=request.query_params.get('keyword'))
-        serializer = ProductModelSerializer(queryset, many=True, context={'request': Request})
+        serializer = ProductModelSerializer(queryset, many=True, context={'request': request})
         return Response(data=serializer.data)
 
 
