@@ -10,6 +10,7 @@ router = routers.DefaultRouter()
 router.register('', StatusViewSet, "서버 운영 정보")
 router.register('users', UserViewSet, "사용자 관리")
 router.register('markets', MarketViewSet, "마켓 데이터 정보")
+router.register('product/products', ProductViewSet, "상품 데이터 정보")
 router.register('products', ProductViewSet, "상품 데이터 정보")
 router.register('notifies', NotifyViewSet, '사용자 맞춤 알림설정')
 
